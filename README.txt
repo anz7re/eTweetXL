@@ -49,7 +49,7 @@ THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE A
 ----------------------------------------------------------------------
 Application Description:
 
-eTweetXL is a basic Excel(VBA) based program for automating, and managing tweets on Twitter from desktop.
+eTweetXL is a basic Excel(VBA) based Windows program for automating, and managing tweets on Twitter from desktop.
 
 (This application mainly uses Windows scripting languages so you'll have to have a Windows operating system in order to run this!)   
  
