@@ -1,17 +1,17 @@
 Option Explicit
 
-Dim objXL, objWb, strMsg, WsShell
+Dim oXL, oWb, xMsg
 
-Set objXL = GetObject(, "Excel.Application")
+Set oXL = GetObject(, "Excel.Application")
 
-If Not TypeName(objXL) = "Empty" Then
-	If objXL.ActiveWorkbook.Name = "eTweetXL.xlsm" Then    
-    		objXL.Application.Run "App_TOOLS.RunPy"
-			WScript.Quit
+If Not TypeName(oXL) = "Empty" Then
+	If oXL.ActiveWorkbook.Name = "eTweetXL.xlsm" Then    
+    		oXL.Application.Run "eTweetXL_TOOLS.runPy"
+			wscript.Quit
 Else 
-    strMsg = "eTweetXL NOT Running!"
+    xMsg = "eTweetXL NOT Running!"
 
 	End If
 		End If
 
-Wscript.Quit
+wscript.Quit
