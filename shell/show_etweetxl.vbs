@@ -1,16 +1,16 @@
 Option Explicit
 
-Dim objXL, objWb
+Dim oXL, oWb
 
-Set objXL = CreateObject("Excel.Application")
+Set oXL = CreateObject("Excel.Application")
 
-Set objWb = objXL.Workbooks.Open("C:\Users\EDITHERE\.z7\autokit\etweetxl\app\eTweetXL.xlsm")
+Set oWb = oXL.Workbooks.Open("C:\Users\EDITHERE\.z7\autokit\etweetxl\app\eTweetXL.xlsm")
 
-WScript.Sleep 50
+wscript.Sleep 10
 
-objWb.Save
-objWb.Close
-Set objWb = Nothing
-Set objXL = Nothing
+oWb.Save
+oWb.Close
+Set oWb = Nothing
+Set oXL = Nothing
 
-Wscript.Quit
+wscript.Quit
