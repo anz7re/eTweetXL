@@ -2,18 +2,18 @@ Option Explicit
 
 On Error Resume Next
 
-Dim objXL, objWb, strMsg
+Dim oXL, oWb, xMsg
 
-Set objXL = GetObject(, "Excel.Application")
+Set oXL = GetObject(, "Excel.Application")
 
-If Not TypeName(objXL) = "Empty" Then
-	If objXL.ActiveWorkbook.Name = "eTweetXL.xlsm" Then    
-    		objXL.Application.Run "App_CLICK.Start_Clk"
-			WScript.Quit
+If Not TypeName(oXL) = "Empty" Then
+	If oXL.ActiveWorkbook.Name = "eTweetXL.xlsm" Then    
+    		oXL.Application.Run "eTweetXL_CLICK.StartBtn_Clk"
+			wscript.Quit
 Else 
-    strMsg = "eTweetXL NOT Running!"
+    MsgBox("Application component not found!")
 
 	End If
 		End If
 
-WScript.Quit
+wscript.Quit
