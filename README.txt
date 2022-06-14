@@ -6,12 +6,12 @@ Written by: anz7re (André)
 ----------------------------------------------------------------------
 Latest Revision:
 
-4/26/2022
+6/7/2022
 
 ----------------------------------------------------------------------
 Version:
 
-1.5.0
+1.6.0
 
 ----------------------------------------------------------------------
 Developer(s): 
@@ -51,7 +51,7 @@ Application Description:
 
 eTweetXL is a basic Excel(VBA) based Windows program for automating, and managing tweets for Twitter on desktop.
 
-(This application mainly uses Windows scripting languages so you'll have to have a Windows operating system in order to run this!)   
+(This application mainly uses Windows scripting languages so you'll have to have a Windows operating system in order to run this!)
  
 ----------------------------------------------------------------------
 Requirements:
@@ -86,7 +86,7 @@ Python Install Guide:
 ---------------------------------------------------------------------
 Default Install Guide (If this is your first time installing the application):
 
-1. Place the first "eTweetXL v1.5.0 Download" folder from the .zip file on your desktop
+1. Place the first "eTweetXL v1.6.0 Download" folder from the .zip file on your desktop
 
 2. Open the "setup.xlsm" file (this should automate connecting the application)
 ***Upon completion you should be prompted w/ a confirmation messagebox, however
@@ -97,9 +97,9 @@ If files are left within the download folder you may need to manully move the "e
 
 4. Select the current home users folder & within that find the directory titled ".z7"
 
-5. Within the ".z7" folder click the folder titled "autokit", then the folder titled "etweetxl"
+5. Within the ".z7" folder select the folder titled "autokit", then the folder titled "etweetxl"
 
-6. Find the "shell" folder, click that, then click the "win" folder
+6. Select the "shell" folder, then select the "win" folder
 
 7. Edit this path inside "show_etweetxl.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\app\eTweetXL.xlsm")
 
@@ -124,7 +124,7 @@ If files are left within the download folder you may need to manully move the "e
 
 6. Within your shell folder create 2 folders titled: "wb", & "win"
 
-7. Copy all documents from the "shell" folder inside the "eTweetXL v1.5.0 Download" folder & paste into the "win" folder 
+7. Copy all documents from the "shell" folder inside the "eTweetXL v1.6.0 Download" folder & paste into the "win" folder 
 
 8. Copy the "eTweetXL.xlsm" file along w/ "scure_replacement.txt", "twitter.ico", "twitter.jpg" (all .jpg & image files), & paste into the "app" folder
 
@@ -160,7 +160,3 @@ Hope you all have fun w/ this!
 
 Thanks for downloading :)
 ----------------------------------------------------------------------
-Change Log:
-
-3/31/2022
-- Fixed issue w/ threaded posts misfiring for default sends 
