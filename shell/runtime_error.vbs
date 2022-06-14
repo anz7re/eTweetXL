@@ -2,34 +2,34 @@ Option Explicit
 
 On Error Resume Next
 
-Dim  oFSO, objFile, objXL, objWs, objRead
-Dim  ReadStr, StrMsg, xRtAction
+Dim  oFSO, oFile, oXL, oWs
+Dim  xStr, xMsg, xRtState
 
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 
-'//Get runtime message
-Set objRead = oFSO.OpenTextFile("C:\Users\EDITHERE\.z7\autokit\etweetxl\debug\rt.err", 1)
+'//GET OFFSET
+Set oFile = oFSO.OpenTextFile("C:\Users\EDITHERE\.z7\autokit\etweetxl\debug\rt.err", 1)
 
-   ReadStr = objRead.ReadAll()
-   xRtAction = ReadStr
-   objRead.Close
-   Set objRead = Nothing
+   xStr = oFile.ReadAll()
+   xRtState = xStr
+   oFile.Close
+   Set oFile = Nothing
 
-Set objXL = GetObject(, "Excel.Application")
+Set oXL = GetObject(, "Excel.Application")
 
-If Not TypeName(objXL) = "Empty" Then
-	If objXL.ActiveWorkbook.Name = "eTweetXL.xlsm" Then  
-		Set objWs = objXL.ActiveWorkbook.Worksheets("Sheet1")
-		    objWs.Cells(14, 52).value = xRtAction
+If Not TypeName(oXL) = "Empty" Then
+	If oXL.ActiveWorkbook.Name = "eTweetXL.xlsm" Then  
+		Set oWs = oXL.ActiveWorkbook.Worksheets("Main")
+		    oWs.Range("RtState").Value = xRtState
 
-WScript.Sleep 50
-    			objXL.Application.Run "App_TOOLS.ShowRtAction"
-			objXL.Application.Run "xlAppScript.DisableFlowStrip"
-				WScript.Quit
+wscript.Sleep 10
+    			oXL.Application.Run "eTweetXL_GET.getRtState"
+			oXL.Application.Run "eTweetXL_TOOLS.disableFlowStrip"
+				wscript.Quit
 Else 
-    strMsg = "eTweetXL NOT Running!"
+    xMsg = "eTweetXL NOT Running!"
 
 	End If
 		End If
 
-WScript.Quit
+wscript.Quit
