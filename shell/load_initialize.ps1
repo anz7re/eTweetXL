@@ -1,4 +1,4 @@
-﻿###############################
+###############################
 #        eTweetXL             #
 #                             #
 # User Initialization Script  #
@@ -9,7 +9,7 @@
 #                       #
 ###############################
 #                             #
-# Latest Revision: 2/23/2022  #
+# Latest Revision: 5/12/2022  #
 #                             #
 ###############################
 #
@@ -22,14 +22,22 @@ $PostMTInfo = ''
 $UserMTInfo = ''
 $RuntimeMTInfo = ''
 $RetryMTInfo = ''
-$WebsetInfo = ''
+$BrowserInfo = ''
 
 #PATHWAYS
 
-#MT FILES
+#ERROR FILES
+$RtErr = $home + '\.z7\autokit\etweetxl\debug\rt.err'
+$WebErr = $home + '\.z7\autokit\etweetxl\debug\web.err'
+
+#BROWSER FILES
+$Browser = $home + '\.z7\autokit\etweetxl\mtsett\webset.txt'
+$BrowserCheck = $home + '\.z7\autokit\etweetxl\mtsett\webcheck.txt'
+
+#TARGET FILES
 $BlankMT = $home + '\.z7\autokit\etweetxl\mtsett\blank.mt'
 $OffsetMT = $home + '\.z7\autokit\etweetxl\mtsett\offset.mt'
-$OffsetMTCopy = $home + '\.z7\autokit\etweetxl\mtsett\offset.mtc'
+$OffsetMTC = $home + '\.z7\autokit\etweetxl\mtsett\offset.mtc'
 $PassMT = $home + '\.z7\autokit\etweetxl\mtsett\pass.mt'
 $PostMT = 'Initializing...'
 $ProfileMT = $home + '\.z7\autokit\etweetxl\mtsett\profile.mt'
@@ -39,11 +47,7 @@ $RtCntrMT = $home + '\.z7\autokit\etweetxl\mtsett\rtcntr.mt'
 $UserMT = $home + '\.z7\autokit\etweetxl\mtsett\user.mt'
 $IniMT = $home + '\.z7\autokit\etweetxl\mtsett\ini.mt'
 
-#WEB SETTINGS
-$Webset = $home + '\.z7\autokit\etweetxl\mtsett\webset.txt'
-$Webcheck = $home + '\.z7\autokit\etweetxl\mtsett\webcheck.txt'
-
-#SCRIPTS
+#RUNTIME SCRIPTS
 $CheckURL = $home + '\.z7\autokit\etweetxl\shell\win\check_url.bat'
 $MeScript = $home + '\.z7\autokit\etweetxl\shell\win\load_initialize.bat'
 $LoadScript = $home + '\.z7\autokit\etweetxl\shell\win\load_login.bat'
@@ -51,21 +55,22 @@ $RuntimeError = $home + '\.z7\autokit\etweetxl\shell\win\runtime_error.vbs'
 $RuntimeRfsh = $home + '\.z7\autokit\etweetxl\shell\win\runtime_refresh.vbs'
 $LoginError = $home + '\.z7\autokit\etweetxl\shell\win\login_error.vbs'
 
-#ERROR FILES
-$RtErr = $home + '\.z7\autokit\etweetxl\debug\rt.err'
+$DateTime = Get-Date 
 
+#(1)
+#
 #INITIALIZING...
 Out-File -FilePath $RtErr -InputObject "Initializing..." -Encoding default
 Start-Process -FilePath $RuntimeError
 Start-Sleep -Seconds 1
 
 $OffsetMTInfo = Get-Content -Path $OffsetMT -Encoding Default
-$OffsetMTCopyInfo = Get-Content -Path $OffsetMTCopy -Encoding Default
+$OffsetMTCInfo = Get-Content -Path $OffsetMTC -Encoding Default
 $PassMTInfo = Get-Content -Path $PassMT -Encoding Default
 $PostMTInfo = $PostMT
 $ProfileMTInfo = Get-Content -Path $ProfileMT -Encoding Default
 $UserMTInfo = Get-Content -Path $UserMT -Encoding Default
-$WebsetInfo = Get-Content -Path $Webset -Encoding Default 
+$BrowserInfo = Get-Content -Path $Browser -Encoding Default 
 $RetryMTInfo = Get-Content -Path $RetryMT -Encoding Default
 
 #CHECK IF PROFILE/USER ALREADY INITIALIZED
@@ -86,7 +91,32 @@ Exit
 
  }
 
-$Wshell = New-Object -ComObject wscript.shell;
+$wshell = New-Object -ComObject wscript.shell;
+
+##### UTILITY #####
+function Close-ActiveBrowser{
+
+#EXIT BROWSER WINDOW
+$wshell.SendKeys('^{w}')
+
+#CHECK IF BROWSER STILL OPEN
+$DefinedItem = Get-Process -Name $BrowserInfo
+
+#INITIAL CHECK
+if($DefinedItem.Count -ne '0'){
+$wshell.SendKeys('^{w}')
+
+$ErrMsg = "`rAn error occurred during the browsing session"
+
+#DOUBLE CHECK
+if($DefinedItem.Count -ne '0'){
+Out-File $WebErr -InputObject $DateTime$ErrMsg  -Append
+Stop-Process $DefinedIte
+
+        }
+    }
+
+ }
 
 #GET RUNTIME & FIND PLACEMENT
 if (Test-Path $RtCntrMT -PathType Leaf){
@@ -110,7 +140,7 @@ Start-Process -FilePath $RuntimeError
 Start-Sleep -Seconds 5
 
 #MAKE BROWSER WINDOW FULLSCREEN
-$Wshell.SendKeys('{F11}')
+$wshell.SendKeys('{F11}')
 
 Start-Sleep -Seconds 5
 
@@ -122,7 +152,7 @@ Out-File -FilePath $RtErr -InputObject "Trying to resolve the issue... Please wa
 Start-Process -FilePath $RuntimeError
 
 Start-Sleep -Seconds 5
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 Start-Sleep -Seconds 5
 
 $nwRetryMTInfo = [int]$RetryMTInfo
@@ -137,22 +167,16 @@ Exit
 
 #FIND USERNAME
 For ($xNum=0; $xNum -le 2; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 }
 
 #SEND USERNAME
-$Wshell.SendKeys($UserMTInfo)
+$wshell.SendKeys($UserMTInfo)
 
 #====================================================================================================
-#Removed 2/11/2022 due to a change in the copy/paste property for the Twitter login boxes.
-#
-#Initially this would check for the username we sent via SendKeys to match our username saved on file.
-#
-#Brought this back 2/23/2022 as it seems this property was changed back? Might've missed something...
-#
-LOGIN CHECK
-$Wshell.SendKeys('^{a}')
-$Wshell.SendKeys('^{c}')
+#LOGIN CHECK
+$wshell.SendKeys('^{a}')
+$wshell.SendKeys('^{c}')
 
 $Notepad = Start-Process $BlankMT
 Start-Sleep -Seconds 1
@@ -162,25 +186,24 @@ $CheckUser = Get-Clipboard
 
 if($CheckUser -match $UserMTInfo){
 #====================================================================================================
-
 #CHECK FOR LOGIN PAGE REACHED
 Start-Process $CheckURL
 Start-Sleep -Seconds 2
-$URL = Get-Content -Path $Webcheck
+$URL = Get-Content -Path $BrowserCheck
 if($URL.Contains("Login on Twitter / Twitter")){
 
-$Wshell.SendKeys('{TAB}')
-$Wshell.SendKeys($PassMTInfo)
-$Wshell.SendKeys('{TAB}')
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{TAB}')
+$wshell.SendKeys($PassMTInfo)
+$wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{ENTER}')
 
    } else {
 
 #IFLOW LOGIN
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 Start-Sleep -Seconds 2
-$Wshell.SendKeys($PassMTInfo)
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys($PassMTInfo)
+$wshell.SendKeys('{ENTER}')
 }
 
 Start-Sleep -Seconds 5
@@ -188,41 +211,41 @@ Start-Sleep -Seconds 5
 #CHECK IF LOGGED IN
 Start-Process $CheckURL
 Start-Sleep -Seconds 2
-$URL = Get-Content -Path $Webcheck
+$URL = Get-Content -Path $BrowserCheck
 if($URL.Contains("Home / Twitter")){
 
 #FIND COMPOSE TWEET BUTTON
 For ($xNum=0; $xNum -le 13; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 50}
 
 #SELECT COMPOSE TWEET BUTTON
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 1
 
 #PASTE DUMMY TWEET
-$Wshell.SendKeys($PostMTInfo) 
+$wshell.SendKeys($PostMTInfo) 
                                      
 Start-Sleep -Seconds 2
 
 For ($xNum=0; $xNum -le 6; $xNum++){
 Start-Sleep -Milliseconds 100
-$Wshell.SendKeys('{TAB}')}
+$wshell.SendKeys('{TAB}')}
 
 Start-Sleep -Seconds 1
 
 #SELECT LOCATION BUTTON IF THERE
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 #JUMP TO URL
-$Wshell.SendKeys('^{l}')
+$wshell.SendKeys('^{l}')
 
 Start-Sleep -Seconds 1
 
 #COPY URL
-$Wshell.SendKeys('^{a}')
-$Wshell.SendKeys('^{c}')
+$wshell.SendKeys('^{a}')
+$wshell.SendKeys('^{c}')
 
 Start-Sleep -Seconds 1
 
@@ -247,9 +270,9 @@ Out-File -FilePath $LocCheck -InputObject $LocBool
 
             }
 
-#EXIT BROWSER WINDOW
-$Wshell.SendKeys('^{w}')
+Close-ActiveBrowser
 
+if (Test-Path $LocCheck -PathType Leaf){
 #SEND SUCCESSFUL INITIALIZATION RESULTS
 $IniErr = '0'
 Out-File -FilePath $IniMT -InputObject $IniErr
@@ -258,11 +281,20 @@ Out-File -FilePath $IniMT -InputObject $IniErr
 Start-Process -FilePath $LoadScript
 
 Exit
+            } else {
+
+#RESTART INITALIZATION IF CHECK UNSUCCESSFUL
+Start-Sleep -Seconds 3
+Start-Process -FilePath $MeScript
+
+Exit
+
+               }
+
                     }
 
 
-
-                        } 
+                            } 
                                 
 
 #IF LOGIN PAGE FAILS AGAIN FORCE CLOSE & RETRY (LIKELY AN ISSUE DURING THE WEB LOAD)
@@ -280,7 +312,7 @@ $nwRetryMTInfo = ($nwRetryMTInfo + 1)
 Out-File -FilePath $RetryMT -InputObject $nwRetryMTInfo
 
 #CLONE OLD OFFSET IN CASE OF SUCCESS
-Out-File -FilePath $OffsetMTCopy -InputObject $OffsetMTInfo -Encoding default
+Out-File -FilePath $OffsetMTC -InputObject $OffsetMTInfo -Encoding default
 
 #RESTART AFTER 5 SECONDS
 Out-File -FilePath $OffsetMT -InputObject 5000 -Encoding default
