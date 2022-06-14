@@ -9,7 +9,7 @@
 #                       #
 ###############################
 #                             #
-# Latest Revision: 3/31/2022  #
+# Latest Revision: 5/12/2022  #
 #                             #
 ###############################
 #
@@ -23,16 +23,24 @@ $MedMTInfo = ''
 $UserMTInfo = ''
 $RuntimeMTInfo = ''
 $RetryMTInfo = ''
-$WebsetInfo = ''
+$BrowserInfo = ''
 $xCt = ''
 
 #PATHWAYS
 
-#MT FILES
+#ERROR FILES
+$RtErr = $home + '\.z7\autokit\etweetxl\debug\rt.err'
+$WebErr = $home + '\.z7\autokit\etweetxl\debug\web.err'
+
+#BROWSER FILES
+$Browser = $home + '\.z7\autokit\etweetxl\mtsett\webset.txt'
+$BrowserCheck = $home + '\.z7\autokit\etweetxl\mtsett\webcheck.txt'
+
+#TARGET FILES
 $apiMT = $home + '\.z7\autokit\etweetxl\mtsett\api.mt'
 $BlankMT = $home + '\.z7\autokit\etweetxl\mtsett\blank.mt'
 $OffsetMT = $home + '\.z7\autokit\etweetxl\mtsett\offset.mt'
-$OffsetMTCopy = $home + '\.z7\autokit\etweetxl\mtsett\offset.mtc'
+$OffsetMTC = $home + '\.z7\autokit\etweetxl\mtsett\offset.mtc'
 $PassMT = $home + '\.z7\autokit\etweetxl\mtsett\pass.mt'
 $PostMT = $home + '\.z7\autokit\etweetxl\mtsett\post.mt'
 $ProfileMT = $home + '\.z7\autokit\etweetxl\mtsett\profile.mt'
@@ -45,11 +53,7 @@ $ThreadMT = $home + '\.z7\autokit\etweetxl\mtsett\thread.mt'
 $ThreadCtMT = $home + '\.z7\autokit\etweetxl\mtsett\threadct.mt'
 $IniMT = $home + '\.z7\autokit\etweetxl\mtsett\ini.mt'
 
-#WEB SETTINGS
-$Webset = $home + '\.z7\autokit\etweetxl\mtsett\webset.txt'
-$Webcheck = $home + '\.z7\autokit\etweetxl\mtsett\webcheck.txt'
-
-#SCRIPTS
+#RUNTIME SCRIPTS
 $apiScript = $home + '\.z7\autokit\etweetxl\shell\win\send_with_api.vbs'
 $CheckURL = $home + '\.z7\autokit\etweetxl\shell\win\check_url.bat'
 $MeScript = $home + '\.z7\autokit\etweetxl\shell\win\load_login.bat'
@@ -59,25 +63,51 @@ $RuntimeRfsh = $home + '\.z7\autokit\etweetxl\shell\win\runtime_refresh.vbs'
 $LoginError = $home + '\.z7\autokit\etweetxl\shell\win\login_error.vbs'
 $IniScript = $home + '\.z7\autokit\etweetxl\shell\win\load_initialize.bat'
 
-#ERROR FILES
-$RtErr = $home + '\.z7\autokit\etweetxl\debug\rt.err'
+$DateTime = Get-Date 
 
+#(1)
+#
 #INITIALIZING...
 Out-File -FilePath $RtErr -InputObject "Initializing..." -Encoding default
 Start-Process -FilePath $RuntimeError
 Start-Sleep -Seconds 1
 
 $OffsetMTInfo = Get-Content -Path $OffsetMT -Encoding Default
-$OffsetMTCopyInfo = Get-Content -Path $OffsetMTCopy -Encoding Default
+$OffsetMTCInfo = Get-Content -Path $OffsetMTC -Encoding Default
 $PassMTInfo = Get-Content -Path $PassMT -Encoding Default
 $PostMTInfo = Get-Content -Path $PostMT -Encoding Default
 $ProfileMTInfo = Get-Content -Path $ProfileMT -Encoding Default
 $MedMTInfo = Get-Content -Path $MedMT -Encoding Default
 $UserMTInfo = Get-Content -Path $UserMT -Encoding Default
-$WebsetInfo = Get-Content -Path $Webset -Encoding Default 
+$BrowserInfo = Get-Content -Path $Browser -Encoding Default 
 $RetryMTInfo = Get-Content -Path $RetryMT -Encoding Default
 
-$Wshell = New-Object -ComObject wscript.shell;
+$wshell = New-Object -ComObject wscript.Shell;
+
+##### SCRIPT UTILITY #####
+function Close-ActiveBrowser{
+
+#EXIT BROWSER WINDOW
+$wshell.SendKeys('^{w}')
+
+#CHECK IF BROWSER STILL OPEN
+$DefinedItem = Get-Process -Name $BrowserInfo
+
+#INITIAL CHECK
+if($DefinedItem.Count -ne '0'){
+$wshell.SendKeys('^{w}')
+
+$ErrMsg = "`rAn error occurred during the browsing session"
+
+#DOUBLE CHECK
+if($DefinedItem.Count -ne '0'){
+Out-File $WebErr -InputObject $DateTime$ErrMsg  -Append
+Stop-Process $DefinedItem
+
+        }
+    }
+
+ }
 
 #CHECK FOR THREAD & FIND COUNT
 if (Test-Path $ThreadMT -PathType Leaf){
@@ -158,7 +188,7 @@ Start-Process -FilePath $apiScript
 Start-Sleep -Seconds 10
 
 #SEND TWEET
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 1
 
@@ -177,7 +207,7 @@ Exit
 }
 
 #START TWITTER USING FIREFOX UNDER PRIVATE BROWSER
-$FF = Start-Process -FilePath 'C:\Program Files\Mozilla Firefox\firefox.exe' -ArgumentList @( '-private-window', 'twitter.com\login')
+$Url = Start-Process -FilePath 'C:\Program Files\Mozilla Firefox\firefox.exe' -ArgumentList @( '-private-window', 'twitter.com\login')
 
 #STARTING AUTOMATION...
 Out-File -FilePath $RtErr -InputObject "Starting automation..." -Encoding default
@@ -186,7 +216,7 @@ Start-Process -FilePath $RuntimeError
 Start-Sleep -Seconds 5
 
 #MAKE BROWSER WINDOW FULLSCREEN
-$Wshell.SendKeys('{F11}')
+$wshell.SendKeys('{F11}')
 
 Start-Sleep -Seconds 5
 
@@ -199,7 +229,7 @@ Out-File -FilePath $RtErr -InputObject "Trying to resolve the issue... Please wa
 Start-Process -FilePath $RuntimeError
 
 Start-Sleep -Seconds 5
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 Start-Sleep -Seconds 5
 
 $nwRetryMTInfo = [int]$RetryMTInfo
@@ -214,22 +244,16 @@ Exit
 
 #FIND USERNAME
 For ($xNum=0; $xNum -le 2; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 }
 
 #SEND USERNAME
-$Wshell.SendKeys($UserMTInfo)
+$wshell.SendKeys($UserMTInfo)
 
 #====================================================================================================
-#Removed 2/11/2022 due to a change in the copy/paste property for the Twitter login boxes.
-#
-#Initially this would check for the username we sent via SendKeys to match our username saved on file.
-#
-#Brought this back 2/23/2022 as it seems this property was changed back? Might've missed something...
-#
-LOGIN CHECK
-$Wshell.SendKeys('^{a}')
-$Wshell.SendKeys('^{c}')
+#LOGIN CHECK
+$wshell.SendKeys('^{a}')
+$wshell.SendKeys('^{c}')
 
 $Notepad = Start-Process $BlankMT
 Start-Sleep -Seconds 1
@@ -243,21 +267,21 @@ if($CheckUser -match $UserMTInfo){
 #CHECK FOR LOGIN PAGE REACHED
 Start-Process $CheckURL
 Start-Sleep -Seconds 2
-$URL = Get-Content -Path $Webcheck
+$URL = Get-Content -Path $BrowserCheck
 if($URL.Contains("Login on Twitter / Twitter")){
 
-$Wshell.SendKeys('{TAB}')
-$Wshell.SendKeys($PassMTInfo)
-$Wshell.SendKeys('{TAB}')
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{TAB}')
+$wshell.SendKeys($PassMTInfo)
+$wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{ENTER}')
 
    } else {
 
 #IFLOW LOGIN
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 Start-Sleep -Seconds 2
-$Wshell.SendKeys($PassMTInfo)
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys($PassMTInfo)
+$wshell.SendKeys('{ENTER}')
 }
 
 Start-Sleep -Seconds 5
@@ -265,21 +289,21 @@ Start-Sleep -Seconds 5
 #CHECK IF LOGGED IN
 Start-Process $CheckURL
 Start-Sleep -Seconds 2
-$URL = Get-Content -Path $Webcheck
+$URL = Get-Content -Path $BrowserCheck
 if($URL.Contains("Home / Twitter")){
 
 #FIND COMPOSE TWEET BUTTON
 For ($xNum=0; $xNum -le 13; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 50}
 
 #SELECT COMPOSE TWEET BUTTON
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 1
 
 #PASTE TWEET
-$Wshell.SendKeys($PostMTInfo) 
+$wshell.SendKeys($PostMTInfo) 
                                      
 Start-Sleep -Seconds 2
 
@@ -288,22 +312,22 @@ Start-Sleep -Seconds 2
 #FIND ADD MEDIA BUTTON
 if ($MedMTInfo -ne ''){
 For ($xNum=0; $xNum -le 1; $xNum++){
-$Wshell.SendKeys('{TAB}')}
+$wshell.SendKeys('{TAB}')}
 
 Start-Sleep -Seconds 1
 
 #SELECT MEDIA BUTTON
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 3
 
 #FIND MEDIA
-$Wshell.SendKeys($MedMTInfo)
+$wshell.SendKeys($MedMTInfo)
 
 Start-Sleep -Seconds 2
 
 #SELECT MEDIA
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 5
 
@@ -346,26 +370,26 @@ $LocType = Get-Content -Path $LocCheck
 if ($MedMTInfo -eq ''){
 For ($xNum=0; $xNum -le 6; $xNum++){
 Start-Sleep -Milliseconds 100
-$Wshell.SendKeys('{TAB}')}
+$wshell.SendKeys('{TAB}')}
 } else {
 For ($xNum=0; $xNum -le 2; $xNum++){
 Start-Sleep -Milliseconds 100
-$Wshell.SendKeys('{TAB}')}
+$wshell.SendKeys('{TAB}')}
 }
 
 Start-Sleep -Seconds 1
 
 #SELECT LOCATION BUTTON
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 #JUMP TO URL
-$Wshell.SendKeys('^{l}')
+$wshell.SendKeys('^{l}')
 
 Start-Sleep -Seconds 1
 
 #COPY URL
-$Wshell.SendKeys('^{a}')
-$Wshell.SendKeys('^{c}')
+$wshell.SendKeys('^{a}')
+$wshell.SendKeys('^{c}')
 
 Start-Sleep -Seconds 1
 
@@ -392,15 +416,15 @@ if ($MedMTInfo -eq ''){
 
 #EXIT WINDOW
 For ($xNum=0; $xNum -le 3; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 200}
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 1 
 
 if ($xCt -eq ''){
 For ($xNum=0; $xNum -le 8; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 200}  
 }
 
@@ -408,15 +432,15 @@ Start-Sleep -Milliseconds 200}
 
 #EXIT WINDOW
 For ($xNum=0; $xNum -le 3; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 200}
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 1
 
 if ($xCt -eq ''){
 For ($xNum=0; $xNum -le 5; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 200}
 }
             }
@@ -438,19 +462,19 @@ $PostIndex3 = 7
 Out-File -FilePath $LocCheck -InputObject $LocBool
 
 
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Seconds 1
 
 if ($MedMTInfo -eq ''){
 
 For ($xNum=0; $xNum -le 11; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 200}
-$Wshell.SendKeys('{ENTER}')    
+$wshell.SendKeys('{ENTER}')    
 } else {
 
 For ($xNum=0; $xNum -le 9; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 200}   
 
             }
@@ -465,11 +489,11 @@ if ($xCt -ne ''){
 
 if ($MedMTInfo -ne ''){
 For ($xNum=0; $xNum -le $MedIndex1; $xNum++){
-$Wshell.SendKeys('{TAB}')}
+$wshell.SendKeys('{TAB}')}
 Start-Sleep -Milliseconds 50
 } else {
 For ($xNum=0; $xNum -le $PostIndex1; $xNum++){
-$Wshell.SendKeys('{TAB}')}
+$wshell.SendKeys('{TAB}')}
 Start-Sleep -Milliseconds 50
 }
 
@@ -482,18 +506,18 @@ if (Test-Path $PostMT -PathType Leaf){
 #FIND THREAD BUTTON (FROM MEDIA)
 if ($MedMTInfo -ne ''){
 For ($xNum=0; $xNum -le $MedIndex2; $xNum++){
-$Wshell.SendKeys('{TAB}')}
+$wshell.SendKeys('{TAB}')}
 } else {
 #FIND THREAD BUTTON (NO MEDIA)
 For ($xNum=0; $xNum -le $PostIndex2; $xNum++){
-$Wshell.SendKeys('{TAB}')}
+$wshell.SendKeys('{TAB}')}
 Start-Sleep -Milliseconds 50
 }
     }
 
 
 #SELECT THREAD
-$Wshell.SendKeys('{ENTER}') 
+$wshell.SendKeys('{ENTER}') 
 
 Start-Process -FilePath $StScript
 
@@ -503,7 +527,7 @@ $PostMTInfo = Get-Content -Path $PostMT -Encoding Default
 $MedMTInfo = Get-Content -Path $MedMT -Encoding Default
 
 #SEND THREADED POST
-$Wshell.SendKeys($PostMTInfo) 
+$wshell.SendKeys($PostMTInfo) 
 
 Start-Sleep -Seconds 5
 
@@ -512,23 +536,23 @@ Start-Sleep -Seconds 5
 #FIND ADD MEDIA BUTTON
 if ($MedMTInfo -ne ''){
 For ($m=0; $m -le 2; $m++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 }
 
 Start-Sleep -Seconds 1
 
 #SELECT MEDIA BUTTON
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 3
 
 #FIND THREAD MEDIA
-$Wshell.SendKeys($MedMTInfo)
+$wshell.SendKeys($MedMTInfo)
 
 Start-Sleep -Seconds 2
 
 #SELECT THREAD MEDIA
-$Wshell.SendKeys('{ENTER}')
+$wshell.SendKeys('{ENTER}')
 
 Start-Sleep -Seconds 2
 
@@ -542,7 +566,7 @@ if ($MedMTInfo -ne ''){
 $xNum = 0
 $SendTimer = 55
 For ($xNum=0; $xNum -le $MedIndex1; $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 50
 }
     } else {
@@ -551,18 +575,17 @@ Start-Sleep -Milliseconds 50
 $xNum = 0
 $SendTimer = 25
 For ($xNum=0; $xNum -le ($PostIndex1); $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 50
 }
     }
 
 #SEND TWEET THREAD
-$Wshell.SendKeys('{ENTER}') 
+$wshell.SendKeys('{ENTER}') 
 
 Start-Sleep -Seconds $SendTimer
 
-#EXIT BROWSER WINDOW
-$Wshell.SendKeys('^{w}')
+Close-ActiveBrowser
 
 #INCREMENT RUNTIME COUNTER
 $nwRtCntr = [int]$RtCntr
@@ -571,7 +594,7 @@ Out-File -FilePath $RtCntrMT -InputObject $nwRtCntr
 
 #REMOVE RETRY FILE
 Remove-Item -Path $RetryMT
-Remove-Item -Path $Webcheck
+Remove-Item -Path $BrowserCheck
 
 #SETTING UP POST...
 Out-File -FilePath $RtErr -InputObject "Setting up post..." -Encoding default
@@ -591,7 +614,7 @@ if ($MedMTInfo -ne ''){
 $xNum = 0
 $SendTimer = 15
 For ($xNum=0; $xNum -le ($MedIndex3); $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 50
 }
     } else {
@@ -601,7 +624,7 @@ Start-Sleep -Milliseconds 50
 $xNum = 0
 $SendTimer = 3
 For ($xNum=0; $xNum -le ($PostIndex3); $xNum++){
-$Wshell.SendKeys('{TAB}')
+$wshell.SendKeys('{TAB}')
 Start-Sleep -Milliseconds 50
 }
     }
@@ -610,12 +633,11 @@ Start-Sleep -Milliseconds 50
        
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 #SEND TWEET
-$Wshell.SendKeys('{ENTER}') 
+$wshell.SendKeys('{ENTER}') 
 
 Start-Sleep -Seconds $SendTimer
 
-#EXIT BROWSER WINDOW
-$Wshell.SendKeys('^{w}')
+Close-ActiveBrowser
 
 #INCREMENT RUNTIME COUNTER
 $nwRtCntr = [int]$RtCntr
@@ -625,7 +647,7 @@ Out-File -FilePath $RtCntrMT -InputObject $nwRtCntr
 #REMOVE SESSION FILES
 Remove-Item -Path $IniMT
 Remove-Item -Path $RetryMT
-Remove-Item -Path $Webcheck
+Remove-Item -Path $BrowserCheck
 
 #SETTING UP POST...
 Out-File -FilePath $RtErr -InputObject "Setting up post..." -Encoding default
@@ -658,7 +680,7 @@ $nwRetryMTInfo = ($nwRetryMTInfo + 1)
 Out-File -FilePath $RetryMT -InputObject $nwRetryMTInfo
 
 #CLONE OLD OFFSET IN CASE OF SUCCESS
-Out-File -FilePath $OffsetMTCopy -InputObject $OffsetMTInfo -Encoding default
+Out-File -FilePath $OffsetMTC -InputObject $OffsetMTInfo -Encoding default
 
 #RESTART AFTER 5 SECONDS
 Out-File -FilePath $OffsetMT -InputObject 5000 -Encoding default
