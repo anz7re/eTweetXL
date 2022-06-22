@@ -3,7 +3,7 @@ Public Function lexKey(ByVal xArt As String) As Byte
 '/\______________________________________________________________________________________________________________________
 '//
 '//     xlAppScript Lexer
-'//        Version: 1.1.2
+'//        Version: 1.1.3
 '/\_____________________________________________________________________________________________________________________________
 '//
 '//     License Information:
@@ -25,7 +25,7 @@ Public Function lexKey(ByVal xArt As String) As Byte
 '//
 '/\_____________________________________________________________________________________________________________________________
 '//
-'//     Latest Revision: 6/6/2022
+'//     Latest Revision: 6/21/2022
 '/\_____________________________________________________________________________________________________________________________
 '//
 '//     Developer(s): anz7re
@@ -832,8 +832,8 @@ xArt = Trim(xArt)
 
 X = 0
 Do While X < UBound(xArtArr)
-If Workbooks(appEnv).Worksheets(appBlk).Range("xlasArticle").Offset(X, 0) = ":" & xArt Then
-Workbooks(appEnv).Worksheets(appBlk).Range("xlasGoto").Value22 = _
+If Workbooks(appEnv).Worksheets(appBlk).Range("xlasArticle").Offset(X, 0).Value2 = ":" & xArt Then
+Workbooks(appEnv).Worksheets(appBlk).Range("xlasGoto").Value2 = _
 Workbooks(appEnv).Worksheets(appBlk).Range("xlasState").Offset(X, 0).Value2 '//find state...
 mPtr = Workbooks(appEnv).Worksheets(appBlk).Range("xlasState").Offset(X, 0).Value2
 E = 2
@@ -1385,10 +1385,6 @@ If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 41 Then Se
 If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 10 Then Set xWin = CTRLBOX: Exit Function
 '//Control Box: Input Fields
 If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 11 Then Set xWin = CTRLBOX.CtrlBoxWindow: Exit Function '5/24/2022
-'//AutomateXL: WinForms
-If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 18 Then Set xWin = AUTOMATEXLHOME: Exit Function '6/7/2022
-If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 19 Then Set xWin = XLMAPPER: Exit Function '6/7/2022
-If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 20 Then Set xWin = XLMAPPERCTRLR: Exit Function '6/7/2022
 
 End Function
 Public Function fndRunTool(xTool) As Object
@@ -1410,8 +1406,6 @@ If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 3 Then Set
 If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 4 Then Set xTool = ETWEETXLQUEUE.xlFlowStrip
 '//Control Box: Input Fields
 If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 11 Then Set xTool = CTRLBOX.CtrlBoxWindow
-'//AutomateXL: xlFlowStrip
-If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 18 Then Set xTool = XLMAPPER.xlFlowStrip
 
 End Function
 Private Function runScript$(xArt)
@@ -1589,11 +1583,13 @@ End Function
 '/\_________________________________________________________________________________________________________________________
 '
 '
+' Version 1.1.3
+'
+' [ Date: 6/21/2022 ]
+'
+' (1): Fixed issue where "goto" statement would cause an error b/c of invalid ".Value2" as ".Value22"
+'
 ' Version 1.1.2
-'
-' [ Date: 6/7/2022 ]
-'
-' (1): Included WinForm $'s for "AutomateXL"
 '
 '
 ' [ Date: 6/6/2022 ]
