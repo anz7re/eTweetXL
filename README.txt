@@ -6,12 +6,12 @@ Written by: anz7re (André)
 ----------------------------------------------------------------------
 Latest Revision:
 
-6/7/2022
+7/22/2022
 
 ----------------------------------------------------------------------
 Version:
 
-1.6.0
+1.7.0
 
 ----------------------------------------------------------------------
 Developer(s): 
@@ -86,7 +86,7 @@ Python Install Guide:
 ---------------------------------------------------------------------
 Default Install Guide (If this is your first time installing the application):
 
-1. Place the first "eTweetXL v1.6.0 Download" folder from the .zip file on your desktop
+1. Place the first "eTweetXL v1.7.0 Download" folder from the .zip file on your desktop
 
 2. Open the "setup.xlsm" file (this should automate connecting the application)
 ***Upon completion you should be prompted w/ a confirmation messagebox, however
@@ -105,7 +105,7 @@ If files are left within the download folder you may need to manully move the "e
 
 8. Edit this path inside "runtime_error.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\debug\rt.err", 1)
 
-9. Edit this path inside "runtime_sleep.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\mtsett\offset.mt", 1)
+9. Edit this path inside "runtime_refresh.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\mtsett\offset.mt", 1)
 
 10. All done!
 
@@ -124,7 +124,7 @@ If files are left within the download folder you may need to manully move the "e
 
 6. Within your shell folder create 2 folders titled: "wb", & "win"
 
-7. Copy all documents from the "shell" folder inside the "eTweetXL v1.6.0 Download" folder & paste into the "win" folder 
+7. Copy all documents from the "shell" folder inside the "eTweetXL v1.7.0 Download" folder & paste into the "win" folder 
 
 8. Copy the "eTweetXL.xlsm" file along w/ "scure_replacement.txt", "twitter.ico", "twitter.jpg" (all .jpg & image files), & paste into the "app" folder
 
@@ -132,7 +132,7 @@ If files are left within the download folder you may need to manully move the "e
 
 10. Edit this path inside "runtime_error.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\debug\rt.err", 1)
 
-11. Edit this path inside "runtime_sleep.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\mtsett\offset.mt", 1)
+11. Edit this path inside "runtime_refresh.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\mtsett\offset.mt", 1)
 
 12. All done!
 
