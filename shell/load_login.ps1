@@ -9,7 +9,7 @@
 #                       #
 ###############################
 #                             #
-# Latest Revision: 5/12/2022  #
+# Latest Revision: 7/22/2022  #
 #                             #
 ###############################
 #
@@ -109,7 +109,17 @@ Stop-Process $DefinedItem
 
  }
 
-#CHECK FOR THREAD & FIND COUNT
+function Send-Tweet{
+
+$wshell.SendKeys('{ESC}')
+Start-Sleep -Seconds 1
+$wshell.SendKeys('{ESC}')
+Start-Sleep -Seconds 1
+$wshell.SendKeys('^{ENTER}') 
+
+} 
+
+#CHECK FOR THREAD
 if (Test-Path $ThreadMT -PathType Leaf){
 $xCt = Get-Content -Path $ThreadMT}
 
@@ -292,13 +302,13 @@ Start-Sleep -Seconds 2
 $URL = Get-Content -Path $BrowserCheck
 if($URL.Contains("Home / Twitter")){
 
-#FIND COMPOSE TWEET BUTTON
-For ($xNum=0; $xNum -le 13; $xNum++){
-$wshell.SendKeys('{TAB}')
-Start-Sleep -Milliseconds 50}
+#REFRESH PAGE
+$wshell.SendKeys('^{r}')
 
-#SELECT COMPOSE TWEET BUTTON
-$wshell.SendKeys('{ENTER}')
+Start-Sleep -Seconds 5
+
+#COMPOSE TWEET HOTKEY
+$wshell.SendKeys('n')
 
 Start-Sleep -Seconds 1
 
@@ -534,10 +544,16 @@ Start-Sleep -Seconds 5
 #FIND MEDIA IF ADDED TO THREADED POST
 
 #FIND ADD MEDIA BUTTON
-if ($MedMTInfo -ne ''){
-For ($m=0; $m -le 2; $m++){
+if($MedMTInfo -ne ''){
+    if($PostMTInfo -ne ' '){
+For ($m=0; $m -le 1; $m++){
 $wshell.SendKeys('{TAB}')
 }
+   } else {
+    For ($m=0; $m -le 2; $m++){
+    $wshell.SendKeys('{TAB}')
+        }
+      }
 
 Start-Sleep -Seconds 1
 
@@ -560,28 +576,15 @@ Start-Sleep -Seconds 2
 
             }
 
-
-if ($MedMTInfo -ne ''){
-#FIND SEND TWEET BUTTON (FROM MEDIA)
-$xNum = 0
+#SET EXIT TIMER (THREAD)
+if($MedMTInfo -ne ''){
 $SendTimer = 55
-For ($xNum=0; $xNum -le $MedIndex1; $xNum++){
-$wshell.SendKeys('{TAB}')
-Start-Sleep -Milliseconds 50
-}
     } else {
-
-#FIND SEND TWEET BUTTON (NO MEDIA)
-$xNum = 0
 $SendTimer = 25
-For ($xNum=0; $xNum -le ($PostIndex1); $xNum++){
-$wshell.SendKeys('{TAB}')
-Start-Sleep -Milliseconds 50
 }
-    }
 
-#SEND TWEET THREAD
-$wshell.SendKeys('{ENTER}') 
+#SEND TWEET (THREAD)
+Send-Tweet
 
 Start-Sleep -Seconds $SendTimer
 
@@ -605,35 +608,18 @@ Start-Sleep -Seconds 1
 Start-Process -FilePath $StScript
 
 Exit
-                } else {
 
-            
+} 
 
-if ($MedMTInfo -ne ''){
-#FIND SEND TWEET BUTTON (FROM MEDIA NOT THREAD)
-$xNum = 0
+#SET EXIT TIMER (NOT THREAD)
+if($MedMTInfo -ne ''){
 $SendTimer = 15
-For ($xNum=0; $xNum -le ($MedIndex3); $xNum++){
-$wshell.SendKeys('{TAB}')
-Start-Sleep -Milliseconds 50
-}
     } else {
-
-
-#FIND SEND TWEET BUTTON (NO MEDIA NOT THREAD)
-$xNum = 0
 $SendTimer = 3
-For ($xNum=0; $xNum -le ($PostIndex3); $xNum++){
-$wshell.SendKeys('{TAB}')
-Start-Sleep -Milliseconds 50
 }
-    }
-
-        } 
-       
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-#SEND TWEET
-$wshell.SendKeys('{ENTER}') 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+#SEND TWEET (NOT THREAD)
+Send-Tweet
 
 Start-Sleep -Seconds $SendTimer
 
