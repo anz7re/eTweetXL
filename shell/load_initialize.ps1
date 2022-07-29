@@ -9,7 +9,7 @@
 #                       #
 ###############################
 #                             #
-# Latest Revision: 5/12/2022  #
+# Latest Revision: 6/28/2022  #
 #                             #
 ###############################
 #
@@ -36,6 +36,7 @@ $BrowserCheck = $home + '\.z7\autokit\etweetxl\mtsett\webcheck.txt'
 
 #TARGET FILES
 $BlankMT = $home + '\.z7\autokit\etweetxl\mtsett\blank.mt'
+$ComposeMT = $home + '\.z7\autokit\etweetxl\mtsett\compose.mt'
 $OffsetMT = $home + '\.z7\autokit\etweetxl\mtsett\offset.mt'
 $OffsetMTC = $home + '\.z7\autokit\etweetxl\mtsett\offset.mtc'
 $PassMT = $home + '\.z7\autokit\etweetxl\mtsett\pass.mt'
@@ -111,7 +112,7 @@ $ErrMsg = "`rAn error occurred during the browsing session"
 #DOUBLE CHECK
 if($DefinedItem.Count -ne '0'){
 Out-File $WebErr -InputObject $DateTime$ErrMsg  -Append
-Stop-Process $DefinedIte
+Stop-Process $DefinedItem
 
         }
     }
@@ -214,13 +215,13 @@ Start-Sleep -Seconds 2
 $URL = Get-Content -Path $BrowserCheck
 if($URL.Contains("Home / Twitter")){
 
-#FIND COMPOSE TWEET BUTTON
-For ($xNum=0; $xNum -le 13; $xNum++){
-$wshell.SendKeys('{TAB}')
-Start-Sleep -Milliseconds 50}
+#REFRESH PAGE
+$wshell.SendKeys('^{r}')
 
-#SELECT COMPOSE TWEET BUTTON
-$wshell.SendKeys('{ENTER}')
+Start-Sleep -Seconds 5
+
+#COMPOSE TWEET HOTKEY
+$wshell.SendKeys('n')
 
 Start-Sleep -Seconds 1
 
