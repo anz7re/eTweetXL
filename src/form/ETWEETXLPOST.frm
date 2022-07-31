@@ -171,7 +171,7 @@ Call eTweetXL_CLICK.HideBtn_Clk
 End Sub
 Private Sub DraftsHdr_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-xArt = "<lib>xtwt;winform(3);add.draft(*);$" '//xlas
+xArt = "<lib>xtwt;winform(13);add.draft(*);$" '//xlas
 Call lexKey(xArt)
         
 End Sub
@@ -496,13 +496,13 @@ xTwt = LinkerBox.Value
 If xTwt <> vbNullString Then xTwtArr = Split(xTwt, ") "): xTwt = xTwtArr(1)
 
 DraftBox.Value = xTwt
-xTwt = Replace(xTwt, " [•]", vbNullString)
+xTwt = Replace(xTwt, " [Â•]", vbNullString)
 xTwt = Replace(xTwt, " [...]", vbNullString)
 DraftBox.Value = xTwt
 
 If InStr(1, xlFlowStrip.Value, "-negate", vbTextCompare) = False Then
 xDraft = LinkerBox.Value
-xDraft = Replace(xDraft, " [•]", vbNullString)
+xDraft = Replace(xDraft, " [Â•]", vbNullString)
 xDraft = Replace(xDraft, " [...]", vbNullString)
 xlFlowStrip.Value = xDraft & " selected..."
 End If
@@ -1180,7 +1180,7 @@ ETWEETXLHOME.Show
 End Sub
 Private Sub UsersHdr_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-xArt = "<lib>xtwt;winform(3);add.user(*);$" '//xlas
+xArt = "<lib>xtwt;winform(13);add.user(*);$" '//xlas
 Call lexKey(xArt)
 
 End Sub
@@ -1192,7 +1192,7 @@ End Sub
 Private Sub DraftFilterBtn_Click()
 
 If DraftFilterBtn.Caption = "..." Then xFil = 0
-If DraftFilterBtn.Caption = "•" Then xFil = 1
+If DraftFilterBtn.Caption = "Â•" Then xFil = 1
         
 Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
 
