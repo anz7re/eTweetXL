@@ -155,7 +155,7 @@ End Sub
 Private Sub NewUser_Click()
 
 If InStr(1, UsernameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);mk.user( -list" & UsernameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);mk.user( -list" & UsernameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -172,7 +172,7 @@ End Sub
 Private Sub RmvUser_Click()
 
 If InStr(1, UsernameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);del.user( -list" & UsernameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);del.user( -list" & UsernameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -191,7 +191,7 @@ End Sub
 Private Sub NewProfile_Click()
 
 If InStr(1, ProfileNameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);mk.profile( -list" & ProfileNameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);mk.profile( -list" & ProfileNameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -208,7 +208,7 @@ End Sub
 Private Sub RmvProfile_Click()
 
 If InStr(1, ProfileNameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);del.profile( -list" & ProfileNameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);del.profile( -list" & ProfileNameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -237,7 +237,7 @@ End If
 If KeyCode.Value = vbKeyS Then
 If Range("xlasKeyCtrl").Value2 = 17 Then
 If InStr(1, UsernameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);mk.user( -list" & UsernameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);mk.user( -list" & UsernameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -271,7 +271,7 @@ End If
 If KeyCode.Value = vbKeyD Then
 If Range("xlasKeyCtrl").Value2 = 35 Then
 If InStr(1, ProfileNameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);del.profile( -list" & ProfileNameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);del.profile( -list" & ProfileNameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -287,7 +287,7 @@ End If
 If KeyCode.Value = vbKeyS Then
 If Range("xlasKeyCtrl").Value2 = 17 Then
 If InStr(1, ProfileNameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);mk.profile( -list" & ProfileNameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);mk.profile( -list" & ProfileNameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -322,7 +322,7 @@ End If
 If KeyCode.Value = vbKeyD Then
 If Range("xlasKeyCtrl").Value2 = 35 Then
 If InStr(1, UsernameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);del.user( -list" & UsernameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);del.user( -list" & UsernameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -338,7 +338,7 @@ End If
 If KeyCode.Value = vbKeyS Then
 If Range("xlasKeyCtrl").Value2 = 17 Then
 If InStr(1, UsernameBox.Value, ",") Then
-xArt = "<lib>xtwt;winform(2);mk.user( -list" & UsernameBox.Value & ");$" '//xlas
+xArt = "<lib>xtwt;winform(12);mk.user( -list" & UsernameBox.Value & ");$" '//xlas
 Call lexKey(xArt)
 Exit Sub
 End If
@@ -631,5 +631,6 @@ Range("DataPullTrig").Value = 0
 Range("xlasWinForm").Value2 = Range("xlasWinFormLast").Value2
 
 End Sub
+
 
 
