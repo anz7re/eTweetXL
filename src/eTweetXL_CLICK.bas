@@ -159,7 +159,7 @@ Public Sub DelAllDraftsBtn_Clk()
 Call getWindow(xWin)
 
 If xWin.DraftFilterBtn.Caption <> "..." Then
-xExt = ".twt": xT = " [•]": If xWin.DraftFilterBtn.Caption <> "•" Then xFil = 0: Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
+xExt = ".twt": xT = " [â€¢]": If xWin.DraftFilterBtn.Caption <> "â€¢" Then xFil = 0: Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
 Call eTweetXL_LOC.xTwtFile(twtFile): xLoc = twtFile
 xStr = "Are you sure you wish to delete all single draft posts for '" & ActiveProfile & "'?"
         Else
@@ -502,7 +502,7 @@ ThisRuntime = Format$(ThisRuntime, "hh:mm:ss")
 '//Add offset to runtime...
 If Range("ActiveOffset").Value <> "" Then
 MyOffset = Range("ActiveOffset").Value
-      If InStr(1, MyOffset, "ÿþ") Then
+      If InStr(1, MyOffset, "Ã¿Ã¾") Then
         MyOffset = Range("Offset").Offset(1, 0).Value
             End If
       
@@ -1385,7 +1385,7 @@ If xPos > 0 Or EDITMODE <> 0 Then
                             Range("Draftlink").Offset(lastRP, 0).Value = ETWEETXLPOST.DraftBox.Value
                             
                             If Range("xlasSilent").Value2 <> 1 Then
-                            xDraft = Replace(xDraft, " [•]", vbNullString)
+                            xDraft = Replace(xDraft, " [â€¢]", vbNullString)
                             xDraft = Replace(xDraft, " [...]", vbNullString)
                             ETWEETXLPOST.xlFlowStrip.Value = xDraft & " linked..."
                             End If
@@ -1965,8 +1965,8 @@ oMedLinkBox.Value = ""
 xPos = Range("MediaScroll").Offset(Range("MedScrollPos").Value)
 
 If InStr(1, xTwt, " [...]") = False Then
-If xWin.DraftFilterBtn.Caption <> "..." Or InStr(1, xTwt, " [•]") Then
-xExt = ".twt": xT = " [•]": If xWin.DraftFilterBtn.Caption <> "•" Then xFil = 0: Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
+If xWin.DraftFilterBtn.Caption <> "..." Or InStr(1, xTwt, " [â€¢]") Then
+xExt = ".twt": xT = " [â€¢]": If xWin.DraftFilterBtn.Caption <> "â€¢" Then xFil = 0: Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
     Else: GoTo asThread
             End If
         Else
@@ -2101,8 +2101,8 @@ On Error Resume Next
 
 
 If InStr(1, xTwt, " [...]") = False Then
-If xWin.DraftFilterBtn.Caption <> "..." Or InStr(1, xTwt, " [•]") Then
-xExt = ".twt": xT = " [•]": If xWin.DraftFilterBtn.Caption <> "•" Then xFil = 0: Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
+If xWin.DraftFilterBtn.Caption <> "..." Or InStr(1, xTwt, " [â€¢]") Then
+xExt = ".twt": xT = " [â€¢]": If xWin.DraftFilterBtn.Caption <> "â€¢" Then xFil = 0: Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
     Else: GoTo asThread
             End If
         Else
@@ -2422,8 +2422,8 @@ Call eTweetXL_POST.pstDraftData(xTwt) '//from queue
 
 '//find current draft filter
 If InStr(1, xTwt, " [...]") = False Then
-If xWin.DraftFilterBtn.Caption <> "..." Or InStr(1, xTwt, " [•]") Then
-xExt = ".twt": xT = " [•]": If xWin.DraftFilterBtn.Caption <> "•" Then xFil = 0: Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
+If xWin.DraftFilterBtn.Caption <> "..." Or InStr(1, xTwt, " [â€¢]") Then
+xExt = ".twt": xT = " [â€¢]": If xWin.DraftFilterBtn.Caption <> "â€¢" Then xFil = 0: Call eTweetXL_CLICK.DraftFilterBtn_Clk(xFil)
 xType = 0
     Else: GoTo asThread
             End If
@@ -2601,8 +2601,8 @@ Range("ActiveTweet").Value2 = "" '//Clear active tweet range
 xPos = 1
 
     Do Until DraftArr(xPos) = ""
-    If InStr(1, DraftArr(xPos), " [•]") Then NwTwtFile = Replace(twtFile, ActiveProfile, Range("ProfileLink").Offset(xPos, 0).Value2): _
-    DraftArr(xPos) = Replace(DraftArr(xPos), " [•]", vbNullString): DraftArr(0) = DraftArr(0) & NwTwtFile & DraftArr(xPos) & ".twt" & ","
+    If InStr(1, DraftArr(xPos), " [â€¢]") Then NwTwtFile = Replace(twtFile, ActiveProfile, Range("ProfileLink").Offset(xPos, 0).Value2): _
+    DraftArr(xPos) = Replace(DraftArr(xPos), " [â€¢]", vbNullString): DraftArr(0) = DraftArr(0) & NwTwtFile & DraftArr(xPos) & ".twt" & ","
     If InStr(1, DraftArr(xPos), " [...]") Then NwTwtFile = Replace(thrFile, ActiveProfile, Range("ProfileLink").Offset(xPos, 0).Value2): _
     DraftArr(xPos) = Replace(DraftArr(xPos), " [...]", vbNullString): DraftArr(0) = DraftArr(0) & NwTwtFile & DraftArr(xPos) & ".thr" & ","
     xPos = xPos + 1
@@ -2864,7 +2864,7 @@ ETWEETXLSETUP.ProfileListBox.Value = ETWEETXLSETUP.ProfileListBox.List(xPos)
                     
                     
 End Sub
-Public Sub RmvUserBox_DelClk()
+Public Sub RmvUserBox_EnClk()
 
 '//For removing a user from the Linker using the Delete key
 
@@ -2979,7 +2979,7 @@ ETWEETXLPOST.UserBox.RemoveItem (xPos - 1)
 xBox = 1: Call setBoxList(xBox)
 
 End Sub
-Public Sub RmvLinkerBox_DelClk()
+Public Sub RmvLinkerBox_EnClk()
 
 '//For removing a draft from the Linker using the Delete key
 
@@ -3055,7 +3055,7 @@ ETWEETXLPOST.LinkerBox.RemoveItem (xPos - 1)
 xBox = 2: Call setBoxList(xBox)
 
 End Sub
-Public Sub RmvRuntimeBtn_DelClk()
+Public Sub RmvRuntimeBtn_EnClk()
 
 '//For removing a time from the Linker using the Delete key
 
@@ -3319,7 +3319,7 @@ If Range("xlasWinForm") = 13 Then Call eTweetXL_GET.getPostData(xType)
     ElseIf xFil = 0 Then
     xType = 0
     Range("DraftFilter").Value = 0
-    xWin.DraftFilterBtn.Caption = "•"
+    xWin.DraftFilterBtn.Caption = "â€¢"
     If Range("xlasWinForm") = 13 Then Call eTweetXL_GET.getPostData(xType)
         End If
         
@@ -3450,46 +3450,6 @@ xFile = fd.Show
                         End If
                         
 End Sub
-Public Sub SplitPostBtn_Clk()
-
-Dim xSplitStr As String: Dim xStr As String
-Dim xSplitArr() As String
-Dim xDiv As Long: Dim xLeftover As Long: Dim xStrLen As Long: Dim xStrLenH As Long
-Dim xMod As Integer
-xMod = 280
-xStr = ETWEETXLPOST.PostBox.Value
-
-If Len(xStr) > 280 Then
-    
-    '//get character count
-    xStrLen = Len(xStr)
-    '//find amount to split string by based on 280 character limit
-    xDiv = xStrLen / 280
-    '//check for remaining ungrouped text
-    xLeftover = xStrLen - (xDiv * 280)
-    
-xStrLenH = xStrLen
-
-Do Until xStrLenH = 0
-
-'//get characters from string
-xSplitStr = Left(xStr, xMod)
-
-'//get string position
-xSplitArr = Split(xStr, xSplitStr): If UBound(xSplitArr) = 1 Then xStr = xSplitArr(1)
-    
-'//post split string into post box
-ETWEETXLPOST.PostBox.Value = xSplitStr
-'//add current post to thread
-Call eTweetXL_CLICK.AddThreadBtn_Clk
-
-xStrLenH = xStrLenH - 280
-xDiv = xDiv - 1
-If xDiv < 0 Then If xLeftover <> 0 Then xMod = xMod - xLeftover: xLeftover = 0 Else xStrLenH = 0
-    Loop
-        End If
-            
-End Sub
 Public Sub TrimPostBtn_Clk()
 
 Dim xStr As String
@@ -3502,126 +3462,3 @@ If Len(xStr) > 280 Then
             End If
             
 End Sub
-Public Function UserOpt_Clk(xType)
-
-If xType = 1 Then
-
-If ETWEETXLPOST.SwapUser.ForeColor <> vbGreen Then
-    Range("UserTrig").Value = 1
-     ETWEETXLPOST.SwapUser.ForeColor = vbGreen
-     ETWEETXLPOST.AddUserA.ForeColor = &H8000000B
-     ETWEETXLPOST.AddUserB.ForeColor = &H8000000B
-        Else
-            Range("UserTrig").Value = 0
-            ETWEETXLPOST.SwapUser.ForeColor = vbBlack
-                End If
-                
-ElseIf xType = 2 Then
-
-If ETWEETXLPOST.AddUserA.ForeColor <> &H8000000B Then
-    Range("UserTrig").Value = 2
-     ETWEETXLPOST.AddUserA.ForeColor = &H8000000B
-     ETWEETXLPOST.SwapUser.ForeColor = vbBlack
-     ETWEETXLPOST.AddUserB.ForeColor = &H8000000B
-        Else
-            Range("UserTrig").Value = 0
-            ETWEETXLPOST.AddUserA.ForeColor = &H8000000B
-                End If
-                
-ElseIf xType = 3 Then
-
-If ETWEETXLPOST.AddUserB.ForeColor <> &H8000000B Then
-    Range("UserTrig").Value = 3
-     ETWEETXLPOST.AddUserB.ForeColor = &H8000000B
-     ETWEETXLPOST.SwapUser.ForeColor = vbBlack
-     ETWEETXLPOST.AddUserA.ForeColor = &H8000000B
-        Else
-            Range("UserTrig").Value = 0
-            ETWEETXLPOST.AddUserB.ForeColor = &H8000000B
-                End If
-                
-                    End If
-
-End Function
-Public Function DraftOpt_Clk(xType)
-
-If xType = 1 Then
-
-If ETWEETXLPOST.SwapDraft.ForeColor <> vbGreen Then
-    Range("DraftTrig").Value = 1
-     ETWEETXLPOST.SwapDraft.ForeColor = vbGreen
-     ETWEETXLPOST.AddDraftA.ForeColor = &H8000000B
-     ETWEETXLPOST.AddDraftB.ForeColor = &H8000000B
-        Else
-            Range("DraftTrig").Value = 0
-            ETWEETXLPOST.SwapDraft.ForeColor = vbBlack
-                End If
-                
-ElseIf xType = 2 Then
-
-If ETWEETXLPOST.AddDraftA.ForeColor <> &H8000000B Then
-    Range("DraftTrig").Value = 2
-     ETWEETXLPOST.AddDraftA.ForeColor = &H8000000B
-     ETWEETXLPOST.SwapDraft.ForeColor = vbBlack
-     ETWEETXLPOST.AddDraftB.ForeColor = &H8000000B
-        Else
-            Range("DraftTrig").Value = 0
-            ETWEETXLPOST.AddDraftA.ForeColor = &H8000000B
-                End If
-                
-ElseIf xType = 3 Then
-
-If ETWEETXLPOST.AddDraftB.ForeColor <> &H8000000B Then
-    Range("DraftTrig").Value = 3
-     ETWEETXLPOST.AddDraftB.ForeColor = &H8000000B
-     ETWEETXLPOST.SwapDraft.ForeColor = vbBlack
-     ETWEETXLPOST.AddDraftA.ForeColor = &H8000000B
-        Else
-            Range("DraftTrig").Value = 0
-            ETWEETXLPOST.AddDraftB.ForeColor = &H8000000B
-                End If
-                
-                    End If
-
-End Function
-Public Function RuntimeOpt_Clk(xType)
-
-If xType = 1 Then
-
-If ETWEETXLPOST.SwapTime.ForeColor <> vbGreen Then
-    Range("TimeTrig").Value = 1
-     ETWEETXLPOST.SwapTime.ForeColor = vbGreen
-     ETWEETXLPOST.AddTimeA.ForeColor = &H8000000B
-     ETWEETXLPOST.AddTimeB.ForeColor = &H8000000B
-        Else
-            Range("TimeTrig").Value = 0
-            ETWEETXLPOST.SwapTime.ForeColor = vbBlack
-                End If
-                
-ElseIf xType = 2 Then
-
-If ETWEETXLPOST.AddTimeA.ForeColor <> &H8000000B Then
-    Range("TimeTrig").Value = 2
-     ETWEETXLPOST.AddTimeA.ForeColor = &H8000000B
-     ETWEETXLPOST.SwapTime.ForeColor = vbBlack
-     ETWEETXLPOST.AddTimeB.ForeColor = &H8000000B
-        Else
-            Range("TimeTrig").Value = 0
-            ETWEETXLPOST.AddTimeA.ForeColor = &H8000000B
-                End If
-                
-ElseIf xType = 3 Then
-
-If ETWEETXLPOST.AddTimeB.ForeColor <> &H8000000B Then
-    Range("TimeTrig").Value = 3
-     ETWEETXLPOST.AddTimeB.ForeColor = &H8000000B
-     ETWEETXLPOST.SwapTime.ForeColor = vbBlack
-     ETWEETXLPOST.AddTimeA.ForeColor = &H8000000B
-        Else
-            Range("TimeTrig").Value = 0
-            ETWEETXLPOST.AddTimeB.ForeColor = &H8000000B
-                End If
-                
-                    End If
-
-End Function
