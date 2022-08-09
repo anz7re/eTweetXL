@@ -29,7 +29,7 @@ Public Function runLib$(xArt)
 '//
 '//
 '//
-'//     Basic Lib Requirements: Windows 10, MS Excel Version 2107, PowerShell 5.1.19041.1023, eTweetXL v1.5.0
+'//     Basic Lib Requirements: Windows 10, MS Excel Version 2107, PowerShell 5.1.19041.1023, eTweetXL v1.7.0
 '//
 '//                             (previous versions not tested &/or unsupported)
 '/\____________________________________________________________________________________________________________________________
