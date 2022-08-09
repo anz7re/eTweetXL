@@ -3,7 +3,7 @@ Public Function lexKey(ByVal xArt As String) As Byte
 '/\______________________________________________________________________________________________________________________
 '//
 '//     xlAppScript Lexer
-'//        Version: 1.1.4
+'//        Version: 1.1.5
 '/\_____________________________________________________________________________________________________________________________
 '//
 '//     License Information:
@@ -25,7 +25,7 @@ Public Function lexKey(ByVal xArt As String) As Byte
 '//
 '/\_____________________________________________________________________________________________________________________________
 '//
-'//     Latest Revision: 8/1/2022
+'//     Latest Revision: 8/8/2022
 '/\_____________________________________________________________________________________________________________________________
 '//
 '//     Developer(s): anz7re
@@ -824,7 +824,7 @@ If UBound(xPtrArr) = 12 Then xPtr = xPtrArr(9): xPtrH = xPtrArr(10): mPtr = xPtr
 If UBound(xPtrArr) = 16 Then xPtr = xPtrArr(13): xPtrH = xPtrArr(14): mPtr = xPtrArr(15): cPtr = xPtrArr(16)
 '//=============================================================
 
-Call fndEnvironment(appEnv, appBlk)
+Call getEnvironment(appEnv, appBlk)
 
 xGArr = Split(xArtArr(xPtrH), "goto ", , vbTextCompare)
 xArt = xGArr(1): Call modArtP(xArt): Call modArtQ(xArt): Call modArtS(xArt)
@@ -1401,9 +1401,11 @@ If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 12 Then Se
 If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 13 Then Set xWin = ETWEETXLPOST: Exit Function
 If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 14 Then Set xWin = ETWEETXLQUEUE: Exit Function
 If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 15 Then Set xWin = ETWEETXLAPISETUP: Exit Function
+If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 16 Then Set xWin = ETWEETXLPOST_EX: Exit Function
 '//eTweetXL: Input Fields
-If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 31 Then Set xWin = ETWEETXLPOST.PostBox: Exit Function
-If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 41 Then Set xWin = ETWEETXLQUEUE.PostBox: Exit Function
+If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 131 Then Set xWin = ETWEETXLPOST.PostBox: Exit Function
+If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 161 Then Set xWin = ETWEETXLPOST_EX.PostBox: Exit Function
+If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 141 Then Set xWin = ETWEETXLQUEUE.PostBox: Exit Function
 '//Control Box: Windows
 If Workbooks(appEnv).Worksheets(appBlk).Range("xlasWinForm").Value2 = 100 Then Set xWin = CTRLBOX: Exit Function
 '//Control Box: Input Fields
@@ -1601,6 +1603,19 @@ End Function
 '//
 '//         CHANGE LOG
 '/\_________________________________________________________________________________________________________________________
+'
+'
+' Version 1.1.5
+'
+'
+' [ Date: 8/8/2022 ]
+'
+' (1): Fixed issue w/ goto statement causing error due to incorrect function call
+'
+'
+' [ Date: 8/2/2022 ]
+'
+' (1): Updated WinForm #'s for eTweetXL
 '
 '
 ' Version 1.1.4
