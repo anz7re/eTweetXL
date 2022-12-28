@@ -9,7 +9,7 @@
 #                       #
 ###############################
 #                             #
-# Latest Revision: 7/22/2022  #
+# Latest Revision: 12/24/2022 #
 #                             #
 ###############################
 #
@@ -68,6 +68,8 @@ $DateTime = Get-Date
 #(1)
 #
 #INITIALIZING...
+cls
+Write-Host "Initializing..."
 Out-File -FilePath $RtErr -InputObject "Initializing..." -Encoding default
 Start-Process -FilePath $RuntimeError
 Start-Sleep -Seconds 1
@@ -97,7 +99,10 @@ $DefinedItem = Get-Process -Name $BrowserInfo
 if($DefinedItem.Count -ne '0'){
 $wshell.SendKeys('^{w}')
 
-$ErrMsg = "`rAn error occurred during the browsing session"
+cls
+Write-Host "Browsing session closed..."
+
+$ErrMsg = "`rBrowsing session closed..."
 
 #DOUBLE CHECK
 if($DefinedItem.Count -ne '0'){
@@ -109,13 +114,34 @@ Stop-Process $DefinedItem
 
  }
 
-function Send-Tweet{
+function Send-Thread{
 
 $wshell.SendKeys('{ESC}')
 Start-Sleep -Seconds 1
 $wshell.SendKeys('{ESC}')
 Start-Sleep -Seconds 1
 $wshell.SendKeys('^{ENTER}') 
+cls
+Write-Host "Tweet sent..."
+
+} 
+
+function Send-Tweet{
+
+if ($MedMTInfo -eq ''){
+Start-Sleep -Seconds 1
+$wshell.SendKeys('^{ENTER}') 
+} else {
+$wshell.SendKeys('g')
+$wshell.SendKeys('h') 
+Start-Sleep -Seconds 2
+$wshell.SendKeys('n')
+Start-Sleep -Seconds 2
+$wshell.SendKeys('^{ENTER}') 
+}
+
+cls
+Write-Host "Tweet sent..."
 
 } 
 
@@ -137,6 +163,8 @@ Exit
 }
 
 #STARTING SLEEP...
+cls
+Write-Host 'Sleeping...'
 Out-File -FilePath $RtErr -InputObject "Starting sleep..." -Encoding default
 Start-Process -FilePath $RuntimeError
 Start-Sleep -Seconds 1
@@ -153,7 +181,8 @@ Start-Sleep -Milliseconds $OffsetMTInfo
 
         #HANDLE NEGATIVE TIME
         if ($TotalSec -le 0){
-        $TotalSec = 0
+        $TotalSec = 1
+        $RuntimeMTInfo = $DateTime.AddSeconds(3)
         }
 
         #REPLACE TIME
@@ -173,6 +202,8 @@ Exit
 
 #SEND USING API SCRIPT
 if (Test-Path $apiMT -PathType Leaf){
+cls
+Write-Host "Connecting to the TWitter API..."
 
 #INCREMENT RUNTIME COUNTER
 $nwRtCntr = [int]$RtCntr
@@ -195,10 +226,13 @@ Start-Sleep -Seconds 1
 #START API SCRIPT
 Start-Process -FilePath $apiScript
 
-Start-Sleep -Seconds 10
+Start-Sleep -Seconds 5
 
 #SEND TWEET
 $wshell.SendKeys('{ENTER}')
+
+cls
+Write-Host 'Tweet sent...'
 
 Start-Sleep -Seconds 1
 
@@ -220,10 +254,14 @@ Exit
 $Url = Start-Process -FilePath 'C:\Program Files\Mozilla Firefox\firefox.exe' -ArgumentList @( '-private-window', 'twitter.com\login')
 
 #STARTING AUTOMATION...
+cls
+Write-Host "Starting automation... (Don't touch anything!)"
 Out-File -FilePath $RtErr -InputObject "Starting automation..." -Encoding default
 Start-Process -FilePath $RuntimeError
 
-Start-Sleep -Seconds 5
+$SleepTimer = 5 + ($RetryMTInfo * 2)
+
+Start-Sleep -Seconds $SleepTimer
 
 #MAKE BROWSER WINDOW FULLSCREEN
 $wshell.SendKeys('{F11}')
@@ -235,6 +273,8 @@ Start-Sleep -Seconds 5
 If($RetryMTInfo -eq 3){
 
 #RESOLVING ISSUE...
+cls
+Write-Host "Trying to resolve the issue... Please wait..."
 Out-File -FilePath $RtErr -InputObject "Trying to resolve the issue... Please wait..." -Encoding default
 Start-Process -FilePath $RuntimeError
 
@@ -584,7 +624,7 @@ $SendTimer = 25
 }
 
 #SEND TWEET (THREAD)
-Send-Tweet
+Send-Thread
 
 Start-Sleep -Seconds $SendTimer
 
@@ -615,7 +655,7 @@ Exit
 if($MedMTInfo -ne ''){
 $SendTimer = 15
     } else {
-$SendTimer = 3
+$SendTimer = 5
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 #SEND TWEET (NOT THREAD)
@@ -656,7 +696,9 @@ Exit
 taskkill /f /im 'firefox.exe'
 
 #ERROR DURING LOGIN...
-Out-File -FilePath $RtErr -InputObject "Error during login... Attempting to retry..." -Encoding default
+cls
+Write-Host "Error during automation... Attemping to retry... "
+Out-File -FilePath $RtErr -InputObject "Error during automation... Attempting to retry..." -Encoding default
 Start-Process -FilePath $RuntimeError
 Start-Sleep -Seconds 1
 
@@ -677,6 +719,8 @@ Start-Sleep -Seconds 20
 Start-Process -FilePath $RuntimeRfsh
 
 #RESTARTING SCRIPT...
+cls
+Write-Host "Restarting script..."
 Out-File -FilePath $RtErr -InputObject "Restarting script..." -Encoding default
 Start-Process -FilePath $RuntimeError
 
@@ -692,7 +736,9 @@ Start-Sleep -Seconds 5
 Remove-Item -Path $RetryMT 
 
 #ERROR DURING LOGIN...
-Out-File -FilePath $RtErr -InputObject "Unresolved error during login..." -Encoding default
+cls
+Write-Host "Unresolved error during automation..."
+Out-File -FilePath $RtErr -InputObject "Unresolved error during automation..." -Encoding default
 Start-Process -FilePath $RuntimeError
 Start-Sleep -Seconds 1
 
