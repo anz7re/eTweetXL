@@ -6,7 +6,7 @@ Written by: anz7re (André)
 ----------------------------------------------------------------------
 Latest Revision:
 
-12/26/2022
+2/1/2023
 
 ----------------------------------------------------------------------
 Version:
@@ -25,7 +25,6 @@ Email: support@etweetxl.xyz | support@autokit.tech | anz7re@autokit.tech
 Social: @anz7re | eTweetXL | @AutokitTech 
 Web: etweetxl.xyz | autokit.tech/etweetxl
 Donate: $donateautokitdevs
-Send Tezos (XTZ): tz1LHZgFyBAAx78pRzUs3oV5JWUxePQiJfp7
 
 (Don't hesitate to reach out if you're having any issues!)
 
@@ -93,21 +92,7 @@ Default Install Guide (If this is your first time installing the application):
 files may still be left within the download folder. 
 If files are left within the download folder you may need to manully move the "eTweetXL.xlsm" & "shell" folder scripts to their respective locations (See below)
 
-3. Go to your "C:" drive & find your "Users" folder 
-
-4. Select the current home users folder & within that find the directory titled ".z7"
-
-5. Within the ".z7" folder select the folder titled "autokit", then the folder titled "etweetxl"
-
-6. Select the "shell" folder, then select the "win" folder
-
-7. Edit this path inside "show_etweetxl.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\app\eTweetXL.xlsm")
-
-8. Edit this path inside "runtime_error.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\debug\rt.err", 1)
-
-9. Edit this path inside "runtime_refresh.vbs": ("C:\Users\EDITHERE\.z7\autokit\etweetxl\mtsett\offset.mt", 1)
-
-10. All done!
+3. All done!
 
 ---------------------------------------------------------------------
 ***Flagged/Manual Install Guide (If the "setup.bat" gets flagged while trying to install):
