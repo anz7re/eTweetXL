@@ -38,7 +38,7 @@ Public Function runLib$(Token)
 '//     Latest Revision: 2/1/2023
 '/\____________________________________________________________________________________________________________________________
 '//
-'//     Developer(s): anz7re (André)
+'//     Developer(s): anz7re (AndrÃ©)
 '//     Contact: support@xlappscript.org | support@autokit.tech | anz7re@autokit.tech
 '//     Web: xlappscript.org | autokit.tech
 '/\____________________________________________________________________________________________________________________________
@@ -454,6 +454,7 @@ DelAllProfile:
         
 AddUser:
 '//Add draft to Linker position
+If Token = vbNullString Then Token = 0
 xPos = CDbl(Token) '//position
 
         Call eTweetXL_CLICK.AddUserBtn_Clk(xPos) '//Add runtime
